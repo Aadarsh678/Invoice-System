@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Billing System{% endblock %}</title>
+    
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'invoice/css/base.css' %}">
+    {% block css%}{% endblock %}
+     
+</head>
+<body>
+    <div class="sidebar">
+        <div class="brand">
+            <h1>Dashboard</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'create_bill' %}">Create Bill</a></li>
+                    <li><a href="{% url 'bill_list' %}">Manage Bill</a></li>
+                    <li><a href="{% url 'create_customer' %}">Customer</a></li>
+                    <li><a href="{% url 'product_list' %}">Product</a></li>
+                    <li><a href="{% url 'category_list' %}">Category</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="content">
+        {% block content %}
+        
+        {% endblock %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+</body>
+</html>

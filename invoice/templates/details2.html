@@ -1,0 +1,55 @@
+{% extends 'home.html'%}
+{% block title %}Details{%endblock%}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'invoice/css/details.css' %}">
+{% endblock %}
+  
+{%block content%}
+<div class="box-container">
+
+  <h1>कपडा पसल</h1>
+  <div class="loc">
+    <h3>डिल्लीबजार, 446600</h3>
+  </div>
+
+  <table>
+    <tr>
+      <th>बिल नम्बर:</th>
+      <td>{{ mybill.invoice_number }}</td> </tr>
+    <tr>
+      <th>प्यान नम्बर:</th>
+      <td>301404138</td> </tr>
+    <tr>
+      <th>मिति:</th>
+      <td>{{ mybill.time_stamp}}</td> </tr>
+    </table>
+
+  <h2>वस्तुहरू</h2>
+  <table>
+    <tr>
+      <th>वस्तु</th>
+      <th>मात्रा</th>
+      <th>मूल्य</th>
+      <th>कुल रकम</th>
+    </tr>
+    {% for item in bill_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.purchase_price }}</td>
+                    <td>{{ item.subtotal|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+    </table>
+  <div class="price">
+    <h3>उप मूल्य: {{ mybill.subtotal|floatformat:2 }}</h3> 
+    <h3>भ्याट: {{ mybill.vat|floatformat:2 }}</h3>
+    <h3>
+      ढुवानी खर्च: {{ mybill.shipping_cost|default_if_none:"0.00" }}</h3> 
+    <h3>कुल रकम: {{ mybill.total_price|floatformat:2 }}</h3>
+    <h3>स्थिति: {{ mybill.get_paid_status }}</h3>
+  </div>
+
+</div>
+{%endblock%}

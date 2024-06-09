@@ -1,0 +1,60 @@
+{% extends 'home.html' %}
+{% block title %}Customer{% endblock %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'invoice/css/customer.css' %}">
+{% endblock %}
+{% block content %}
+<h1>Add Customer</h1>
+<form method="post" class="customer-form">
+    {% csrf_token %}
+    {{ formc.as_p }}
+    <button type="submit">Add Customer</button>
+</form>
+    <div class="customer"><h1>Customers</h1></div>
+    <table class="table-css">
+        <tr>
+          <th>Customer name</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Created date</th>
+          <th>Action</th>
+        </tr>
+        {% for customer in page_obj.object_list %}
+        <tr>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{ customer.phone_number }}</td>
+          <td>{{ customer.created_at }}</td>
+          <td>
+            <div class="action-links">
+                <a href="customer_update/{{ customer.id }}">Update</a>
+                <a href="customer_delete/{{ customer.id }}" class="del">Delete</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <center>
+      <div class="pagination">
+          {% if page_obj.has_previous %}
+              <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">«</a>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                  <strong class="pagination-current">{{ num }}</strong>
+              {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                  <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+              {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">»</a>
+          {% endif %}
+      </div>
+  </center>
+
+{% endblock %}

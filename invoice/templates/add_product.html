@@ -1,0 +1,58 @@
+{% extends 'home.html' %}
+{% block title %}Products{% endblock %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'invoice/css/products.css' %}">
+{% endblock %}
+{% block content %}
+<h1>Add Product</h1>
+<form method="post" class="add-product-form">
+    {% csrf_token %}
+    {{ formp.as_p }}
+    <button type="submit">Add product</button>
+</form>
+    <h1>Products</h1>
+    <table class="product-table">
+        <tr>
+            <th>Product name</th>
+            <th>Price</th>
+            <th>Available quantity</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+        {% for product in page_obj.object_list %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity_available }}</td>
+            <td>{{ product.category }}</td>
+            <td class="product-links">
+                <!-- <a href="details/{{ product.id }}">Details</a> -->
+                <a href="product_update/{{ product.id }}">Update</a>
+                <!-- <a href="product_delete/{{ product.id }}">Delete</a> -->
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <center>
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">«</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <strong class="pagination-current">{{ num }}</strong>
+                {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                    <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">»</a>
+            {% endif %}
+        </div>
+    </center>
+    
+
+{% endblock %}

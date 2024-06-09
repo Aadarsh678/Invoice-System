@@ -1,0 +1,101 @@
+
+.bill-list-container {
+    margin: 20px auto;
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#tb table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+
+#tb th, #tb td {
+    border: 1px solid #ddd;
+    padding: 8px;
+
+}
+
+#tb th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+#tb tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.links-css a {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    border-radius: 5px;
+}
+
+.links-css a:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}
+.links-css a.delete-link {
+    background-color: #dc3545; 
+}
+
+.links-css a.delete-link:hover {
+    background-color: #c82333; 
+    transform: translateY(-5px);
+}
+h1{
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.pagination-link, .pagination-current {
+    color: #007bff;
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    margin: 0 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.pagination-link:hover {
+    background-color: #ddd;
+}
+
+.pagination-current {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+.links-css-export a {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    border-radius: 5px;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.links-css-export a:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}

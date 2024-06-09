@@ -1,0 +1,35 @@
+{% extends 'home.html' %}
+{% block title %}Update Bill{% endblock %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'invoice/css/update_bill.css' %}">
+{% endblock %}
+{% block content %}
+<h1>Update Bill</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ formb.as_p }}
+    <button type="submit">Update</button>
+    <h2>Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in products %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.purchase_price }}</td>
+                <td>{{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+{% endblock %}

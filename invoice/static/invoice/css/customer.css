@@ -1,0 +1,161 @@
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.customer{
+    margin-top: 40px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+.action-links a {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    border-radius: 5px;
+}
+
+.action-links a:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}
+
+.action-links a.del {
+    background-color: #dc3545; 
+}
+
+.action-links a.del:hover {
+    background-color: #c82333; 
+    transform: translateY(-5px);
+}
+
+
+.add-customer-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-customer-button:hover {
+    background-color: #218838;
+    transform: translateY(-5px);
+}
+
+
+.customer-form {
+    margin-top: 20px;
+    max-width: 1000px; 
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.customer-form input[type="text"],
+.customer-form input[type="email"],
+.customer-form input[type="tel"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.customer-form button[type="submit"] {
+    background-color:  #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.customer-form button[type="submit"]:hover {
+    background-color:#218838;
+    transform: translateY(-5px);
+}
+
+
+.customer-form textarea[name="address"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+   
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    height: 50px;
+}
+.pagination {
+    display: inline-block;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.pagination-link, .pagination-current {
+    color: #007bff;
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    margin: 0 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.pagination-link:hover {
+    background-color: #ddd;
+}
+
+.pagination-current {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+.table-css{
+    width: auto;
+    
+  
+    overflow-y: auto;
+}
+
+
+
+

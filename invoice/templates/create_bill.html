@@ -1,0 +1,112 @@
+{% extends 'home.html' %}
+{% block title %}Create Bill{% endblock %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'invoice/css/bill_create.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="title"><h1>Create Bill</h1></div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="customer-details">
+                <fieldset>
+                    <legend>Details</legend>
+                    <p>New Customer :<div id="new-customer" ><a href="create_customer/">Add</a></div></p>
+                    {{ formb.as_p }}
+                    <label for="delivery-checkbox">Do you want the product delivered?</label>
+                    <input type="checkbox" id="delivery-checkbox" name="delivery" onclick="toggleShippingCost()">
+                    <div id="shipping-cost-container" style="display: none;">
+                        <label for="id_shipping_cost">Shipping Cost</label>
+                        {{ formb.shipping_cost }}
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="bill-items-container">
+                <fieldset>
+                    <legend>Bill Items</legend>
+                    {{ formset.management_form }}
+                    <div id="bill-items">
+                        {% for form in formset %}
+                            <div class="bill-item">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="{{ form.product.id_for_label }}">Product:</label>
+                                        {{ form.product }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
+                                        {{ form.quantity }}
+                                    </div>
+                                    <button type="button" class="remove-item btn btn-danger">Remove</button>
+                                </div>
+                                
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" id="add-item" class="btn btn-primary add-item">Add Item</button>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success create-button">Create Bill</button>
+        </div>
+    </form>
+
+    <!-- Hidden template for new forms -->
+    <div id="empty-form" style="display:none;">
+        <div class="bill-item">
+            <div class="form-row">
+                {{ formset.empty_form.as_p }} 
+                <button type="button" class="remove-item btn btn-danger">Remove</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <input type="hidden" name="billitem_set-TOTAL_FORMS" id="id_form-TOTAL_FORMS" value="{{ formset.total_form_count }}">
+
+    <script>
+        function toggleShippingCost() {
+            const deliveryCheckbox = document.getElementById('delivery-checkbox');
+            const shippingCostContainer = document.getElementById('shipping-cost-container');
+            if (deliveryCheckbox.checked) {
+                shippingCostContainer.style.display = 'block';
+                shippingCostContainer.querySelector('input').required = true;
+            } else {
+                shippingCostContainer.style.display = 'none';
+                shippingCostContainer.querySelector('input').required = false;
+                shippingCostContainer.querySelector('input').value = '';  // Clear the value if not required
+            }
+        }
+
+        window.onload = function() {
+            toggleShippingCost();  // Initial call to set the correct state
+        };
+
+        document.getElementById('add-item').addEventListener('click', function() {
+            const formsetDiv = document.getElementById('bill-items');
+            const emptyFormDiv = document.getElementById('empty-form').innerHTML;
+            const newForm = document.createElement('div');
+            newForm.innerHTML = emptyFormDiv.replace(/__prefix__/g, formsetDiv.children.length);
+            formsetDiv.appendChild(newForm);
+            updateTotalForms();
+        });
+
+        function updateTotalForms() {
+            const totalForms = document.querySelectorAll('#bill-items .bill-item').length;
+            document.querySelector('#id_form-TOTAL_FORMS').value = totalForms;
+        }
+
+        document.getElementById('bill-items').addEventListener('click', function(event) {
+            if (event.target.classList.contains('remove-item')) {
+                event.target.closest('.bill-item').remove();
+                updateTotalForms();
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'home.html'%}
+{% block title %}Update Product{% endblock %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'invoice/css/update_products.css' %}">
+{% endblock %}
+{% block content%}
+<h1>Update Product</h1>
+<form method="post" class="update-product">
+    {% csrf_token %}
+    {{ formp.as_p }}
+    <button type="submit">Update</button>
+  </form>
+{%endblock%}

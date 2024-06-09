@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .invoice-container {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        .header img {
+            height: 50px;
+        }
+        .invoice-title {
+            font-size: 24px;
+            color: #fff;
+            background-color: #2d3e50;
+            padding: 10px;
+        }
+        .invoice-details {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .billing-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .billing-details div {
+            width: 48%;
+        }
+        .items, .totals {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .items th, .items td, .totals th, .totals td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .items th {
+            background-color: #f2f2f2;
+        }
+        .totals th {
+            background-color: #f9f9f9;
+        }
+        .totals tr:last-child {
+            font-weight: bold;
+        }
+        .terms {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <div>
+                <img src="logo.png" alt="Ecommerce Surface">
+                <p>Ecommerce Surface</p>
+            </div>
+            <div class="invoice-title">
+                <p>INVOICE</p>
+            </div>
+        </div>
+        <div class="invoice-details">
+            <p>Invoice Number: {{ mybill.invoice_number }}</p>
+            <p>Date: {{ mybill.time_stamp }}</p>
+        </div>
+        <div class="billing-details">
+            <div>
+                <p><strong>Bill From:</strong></p>
+                <p>xyz<br>Dillibazar, 446600<br>+977 9867546780</p>
+            </div>
+            <div>
+                <p><strong>Bill To:</strong></p>
+                <p>{{ mybill.customer.name }}<br>{{ mybill.customer.address }}<br>{{ mybill.customer.phone_number }}</p>
+            </div>
+        </div>
+        <table class="items">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in bill_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.purchase_price }}</td>
+                    <td>{{ item.subtotal|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="totals">
+            <tbody>
+                <tr>
+                    <th>Subtotal:</th>
+                    <td>{{ mybill.subtotal|floatformat:2 }}</td>
+                </tr>
+                <tr>
+                    <th>VAT:</th>
+                    <td>{{ mybill.vat|floatformat:2 }}</td>
+                </tr>
+                <tr>
+                    <th>Shipping Cost:</th>
+                    <td>{{ mybill.shipping_cost|default_if_none:"0.00" }}</td>
+                </tr>
+                <tr>
+                    <th>Total:</th>
+                    <td>{{ mybill.total_price|floatformat:2 }}</td>
+                </tr>
+                <tr>
+                    <th>Status:</th>
+                    <td>{{ mybill.get_paid_status }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="terms">
+            <p><strong>Terms & Conditions:</strong></p>
+            
+        </div>
+    </div>
+</body>
+</html>

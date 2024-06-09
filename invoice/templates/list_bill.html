@@ -1,0 +1,80 @@
+{% extends 'home.html' %}
+{% block title %}Bills{% endblock %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'invoice/css/list_bill.css' %}">
+{% endblock %}
+
+{% block content %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <strong>Message:</strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+<div class="bill-list-container">
+    <h1>Bill List</h1>
+        <div class="links-css-export">
+        <a href="{% url 'export_bills_csv' %}">Export to CSV</a>
+        <a href="{% url 'export_bills_excel' %}">Export to Excel</a>
+        </div>
+    <div id="tb">
+        <table>
+            <thead>
+                <tr>
+                    <th>Invoice Number</th>
+                    <th>Customer</th>
+                    <th>Shipping Cost</th>
+                    <th>Total Price</th>
+                    <th>Paid</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bill in page_obj.object_list %}
+                <tr>
+                    <td>{{ bill.invoice_number }}</td>
+                    <td>{{ bill.customer.name }}</td>
+                    <td>{{ bill.shipping_cost }}</td>
+                    <td>{{ bill.total_price }}</td>
+                    <td>{{ bill.get_paid_status }}</td>
+                    <td>
+                        <div class="links-css">
+                            <a href="details/{{bill.id}}">Details</a>
+                            <a href="bill_update/{{bill.id}}">Update</a>
+                            <a href="bill_delete/{{bill.id}}" class="delete-link">Delete</a>
+                            <a href="{{ bill.id }}/download/">Download PDF</a>
+                            <a href="{{ bill.id }}/view_pdf/">View PDF</a>
+                            <a href="{{ bill.id }}/send_email/">Send Email</a>
+                            
+
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <center>
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">«</a>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <strong class="pagination-current">{{ num }}</strong>
+                    {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                        <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">»</a>
+                {% endif %}
+            </div>
+        </center>
+    </div>
+</div>
+{% endblock %}

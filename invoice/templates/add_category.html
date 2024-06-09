@@ -1,0 +1,50 @@
+{% extends 'home.html' %}
+{% block title %}Categories{% endblock %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'invoice/css/category.css' %}">
+{% endblock %}
+{% block content %}
+<h1>Add Category</h1>
+<form method="post" class="add-category-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Category</button>
+</form>
+    <h1>Categories</h1>
+    <table class="category-table">
+        <tr>
+            <th>Category name</th>
+            <th>Actions</th>
+        </tr>
+        {% for category in page_obj.object_list %}
+        <tr>
+            <td>{{ category.name }}</td>
+            <td class="category-actions">
+                <a href="category_delete/{{ category.id }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <center>
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">«</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <strong class="pagination-current">{{ num }}</strong>
+                {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                    <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">»</a>
+            {% endif %}
+        </div>
+    </center>
+
+
+{% endblock %}
