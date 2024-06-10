@@ -14,13 +14,26 @@
             <div class="customer-details">
                 <fieldset>
                     <legend>Details</legend>
-                    <p>New Customer :<div id="new-customer" ><a href="create_customer/">Add</a></div></p>
-                    {{ formb.as_p }}
+                    <p>New Customer :
+                        <div id="new-customer"><a href="create_customer/">Add</a></div>
+                    </p>
+                    <div class="form-group">
+                        <label for="{{ formb.customer.id_for_label }}">Customer:</label>
+                        {{ formb.customer }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ formb.vat.id_for_label }}">VAT:</label>
+                        {{ formb.vat }}
+                    </div>
                     <label for="delivery-checkbox">Do you want the product delivered?</label>
                     <input type="checkbox" id="delivery-checkbox" name="delivery" onclick="toggleShippingCost()">
                     <div id="shipping-cost-container" style="display: none;">
-                        <label for="id_shipping_cost">Shipping Cost</label>
+                        <label for="{{ formb.shipping_cost.id_for_label }}">Shipping Cost:</label>
                         {{ formb.shipping_cost }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ formb.paid.id_for_label }}">Paid:</label>
+                        {{ formb.paid }}
                     </div>
                 </fieldset>
             </div>
@@ -43,7 +56,6 @@
                                     </div>
                                     <button type="button" class="remove-item btn btn-danger">Remove</button>
                                 </div>
-                                
                             </div>
                         {% endfor %}
                     </div>
@@ -61,10 +73,9 @@
     <div id="empty-form" style="display:none;">
         <div class="bill-item">
             <div class="form-row">
-                {{ formset.empty_form.as_p }} 
+                {{ formset.empty_form.as_p }}
                 <button type="button" class="remove-item btn btn-danger">Remove</button>
             </div>
-            
         </div>
     </div>
 
